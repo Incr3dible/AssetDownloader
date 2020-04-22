@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AssetDownloader.Models;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace AssetDownloader
 {
@@ -22,7 +22,7 @@ namespace AssetDownloader
             if (File.Exists("fingerprint.json"))
             {
                 var json = File.ReadAllText("fingerprint.json");
-                var fingerprint = JsonConvert.DeserializeObject<Fingerprint>(json);
+                var fingerprint = JsonSerializer.Deserialize<Fingerprint>(json);
 
                 Console.WriteLine($"Version: {fingerprint.Version}");
                 Console.WriteLine($"SHA:     {fingerprint.Sha}\n");
@@ -33,7 +33,7 @@ namespace AssetDownloader
             }
             else
             {
-                Console.WriteLine("File not found.");
+                Console.WriteLine("Fingerprint not found.");
             }
 
             Console.ReadKey(true);
